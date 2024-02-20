@@ -13,8 +13,32 @@ app.use(cors())
 
 // multer ----------------------------
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './files')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() 
+      cb(null, uniqueSuffix + file.originalname)
+    }
+  })
+  
+  const upload = multer({ storage: storage })
+
+app.post("/upload-file", upload.single('file'), (req, res) => {
+
+    console.log(req.file)
+})
+
+
+
+
+
 
 // Api -------------------------------------------------------------------------------------
+
+
+
 app.get('/', (req, res) => {
     res.send('hello world')
 })
