@@ -11,6 +11,10 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+// without this code you cannot access the pdf in frontant
+// http://localhost:5000/files/1708426812828react_native_Resume.pdf
+app.use("/files", express.static("files"))   // this is get api of get the pdf 
+
 
 // multer ----------------------------
 
@@ -39,6 +43,21 @@ app.post("/upload-file", upload.single('file'), async(req, res) => {
         res.json({status:err})
     }
 
+})
+
+
+app.get("/get-files", async(req, res) => {
+    try{
+        const data = await PdfSchema.find({})
+        // console.log(pdfFile)
+        res.status(200).json({
+            success:true, 
+            data
+        })
+
+    }catch(err){
+        console.log(err)
+    }
 })
 
 
