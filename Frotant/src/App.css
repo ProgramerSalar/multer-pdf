@@ -22,7 +22,7 @@
     border: solid 1px white;
     border-radius: 1vw;
 
-    
+
     #first-input{
       height: 3.5vw;
       border: none;
@@ -41,6 +41,7 @@
       height: 3vw;
       background-color: blue;
       border: none;
+      cursor: pointer;
     }
 
     

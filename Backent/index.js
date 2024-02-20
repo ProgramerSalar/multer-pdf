@@ -2,6 +2,7 @@ import express from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import multer from "multer"
+import { PdfSchema } from "./models/pdf.js"
 
 
 // middleware ----------------------------------------------------------------------------------
@@ -25,9 +26,19 @@ const storage = multer.diskStorage({
   
   const upload = multer({ storage: storage })
 
-app.post("/upload-file", upload.single('file'), (req, res) => {
+app.post("/upload-file", upload.single('file'), async(req, res) => {
 
-    console.log(req.file)
+    // console.log("pdf-file",req.file)
+    const title = req.body.title
+    const file = req.file.filename
+
+    try{
+        await PdfSchema.create({title, pdf:file})
+        res.send({status:"Ok"})
+    }catch(err){
+        res.json({status:err})
+    }
+
 })
 
 
